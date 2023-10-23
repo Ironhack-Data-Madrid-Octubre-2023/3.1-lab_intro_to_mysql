@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `lab_mysql`.`customer` (
   `id_customer` INT NOT NULL,
   `customers_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
-  `phone` INT NULL,
+  `phone` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
   `city` VARCHAR(45) NULL,
@@ -102,3 +102,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
