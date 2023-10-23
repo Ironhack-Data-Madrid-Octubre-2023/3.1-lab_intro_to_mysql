@@ -64,7 +64,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `coches`.`customers` (
   `customerID` INT NOT NULL,
   `name` VARCHAR(45) NULL,
-  `phonenumber` INT NULL,
+  `phonenumber` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
   `city` VARCHAR(45) NULL,
