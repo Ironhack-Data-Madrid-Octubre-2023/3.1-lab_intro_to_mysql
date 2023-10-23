@@ -109,3 +109,58 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+ALTER TABLE Cars
+MODIFY COLUMN VIN VARCHAR(20);
+
+ALTER TABLE `cars_db`.`Cars` 
+CHANGE COLUMN `year` `year` INT NULL DEFAULT NULL ;
+
+ALTER TABLE `cars_db`.`Customers` 
+CHANGE COLUMN `first_name` `cust_number` INT NULL DEFAULT NULL ,
+CHANGE COLUMN `last_name` `name` VARCHAR(45) NULL DEFAULT NULL ;
+
+ALTER TABLE `cars_db`.`Customers` 
+CHANGE COLUMN `phone_number` `phone_number` VARCHAR(45) NULL DEFAULT NULL ,
+DROP INDEX `phone_number_UNIQUE` ;
+
+ALTER TABLE `cars_db`.`Customers` 
+DROP INDEX `email_UNIQUE` ;
+
+ALTER TABLE `cars_db`.`Salespersons` 
+DROP FOREIGN KEY `fk_Salespersons_Stores1`;
+ALTER TABLE `cars_db`.`Salespersons` 
+CHANGE COLUMN `Stores_id_store` `Stores_id_store` INT(11) NULL ,
+ADD COLUMN `id_staffnum` VARCHAR(45) NULL AFTER `Stores_id_store`;
+ALTER TABLE `cars_db`.`Salespersons` 
+ADD CONSTRAINT `fk_Salespersons_Stores1`
+  FOREIGN KEY (`Stores_id_store`)
+  REFERENCES `cars_db`.`Stores` (`idstore`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `cars_db`.`Salespersons` 
+CHANGE COLUMN `id_staffnum` `id_staffnum` VARCHAR(45) NULL DEFAULT NULL AFTER `idstaff`;
+
+ALTER TABLE `cars_db`.`Salespersons` 
+DROP COLUMN `last_name`,
+CHANGE COLUMN `first_name` `name` VARCHAR(45) NULL DEFAULT NULL ,
+ADD COLUMN `store_name` VARCHAR(45) NULL AFTER `name`;
+
+ALTER TABLE `cars_db`.`Salespersons` 
+DROP FOREIGN KEY `fk_Salespersons_Stores1`;
+ALTER TABLE `cars_db`.`Salespersons` 
+DROP COLUMN `Stores_id_store`,
+DROP INDEX `fk_Salespersons_Stores1_idx` ;
+
+
+ALTER TABLE `cars_db`.`Invoices` 
+DROP FOREIGN KEY `fk_Invoices_Stores`;
+ALTER TABLE `cars_db`.`Invoices` 
+DROP COLUMN `Stores_idstore`,
+CHANGE COLUMN `Salespersons_idstaff` `Salespersons_idstaff` INT(11) NOT NULL AFTER `Customers_idcustomer`,
+CHANGE COLUMN `date` `date` DATE NULL DEFAULT NULL ,
+DROP INDEX `fk_Invoices_Stores_idx` ;
+
+
