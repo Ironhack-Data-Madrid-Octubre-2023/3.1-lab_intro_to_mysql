@@ -71,7 +71,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lab_mysql`.`invoices` (
   `id_Invoices` INT NOT NULL,
   `invoice_number` INT NOT NULL,
-  `date` DATE NULL,
+  `date` VARCHAR(45) NULL,
   `salesperson` INT NOT NULL,
   `cars` INT NOT NULL,
   `customer` INT NOT NULL,
