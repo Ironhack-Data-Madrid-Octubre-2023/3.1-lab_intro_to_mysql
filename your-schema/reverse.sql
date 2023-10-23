@@ -25,6 +25,7 @@ USE `cars` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars`.`Invoices` (
   `idInvoices` INT NOT NULL,
+  `InvoiceNumber` INT NULL,
   `Date` DATETIME NULL,
   `Car` VARCHAR(45) NULL,
   `Customer` VARCHAR(45) NULL,
@@ -99,3 +100,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
