@@ -1,4 +1,4 @@
-insert into salespersons (idSalespersons,`Name`,Store,Invoices_idInvoices)
+insert into salespersons (ID,idSalespersons,`Name`,Store)
 values (0,'00001', 'Petey Cruiser', 'Madrid'),
 (1, '00002', 'Anna Sthesia', 'Barcelona'),
 (2, '00003', 'Paul Molive', 'Berlin'),
