@@ -1,0 +1,1 @@
+delete from cars where `ID Cars` = '5';
