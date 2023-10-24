@@ -21,31 +21,13 @@ USE `carcompany` ;
 -- Table `carcompany`.`cars`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carcompany`.`cars` (
-  `car_id` INT NOT NULL,
+  `idcars` INT NOT NULL,
   `VIN` CHAR(17) NULL,
   `manufacturer` VARCHAR(15) NULL,
   `model` VARCHAR(20) NULL,
   `year` YEAR(4) NULL,
   `colour` VARCHAR(10) NULL,
-  PRIMARY KEY (`car_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `carcompany`.`customers`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `carcompany`.`customers` (
-  `customer_id` INT NOT NULL,
-  `firstname` VARCHAR(20) NULL,
-  `lastname` VARCHAR(100) NULL,
-  `phonenumber` VARCHAR(15) NULL,
-  `email` VARCHAR(100) NULL,
-  `address` VARCHAR(150) NULL,
-  `city` VARCHAR(50) NULL,
-  `state_province` VARCHAR(45) NULL,
-  `country` VARCHAR(45) NULL,
-  `zipcode` VARCHAR(15) NULL,
-  PRIMARY KEY (`customer_id`))
+  PRIMARY KEY (`idcars`))
 ENGINE = InnoDB;
 
 
@@ -53,12 +35,29 @@ ENGINE = InnoDB;
 -- Table `carcompany`.`salespeople`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carcompany`.`salespeople` (
-  `salespersonid` INT NOT NULL,
-  `firstname` VARCHAR(20) NULL,
-  `lastname` VARCHAR(100) NULL,
+  `idsalespeople` INT NOT NULL,
+  `staffid` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `store` VARCHAR(45) NULL,
+  PRIMARY KEY (`idsalespeople`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carcompany`.`customers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carcompany`.`customers` (
+  `idcustomers` INT NOT NULL,
+  `customerid` VARCHAR(45) NULL,
+  `name` VARCHAR(100) NULL,
+  `phone` VARCHAR(20) NULL,
+  `email` VARCHAR(100) NULL,
+  `address` VARCHAR(150) NULL,
+  `city` VARCHAR(50) NULL,
+  `state_province` VARCHAR(45) NULL,
   `country` VARCHAR(45) NULL,
-  PRIMARY KEY (`salespersonid`))
+  `postal` VARCHAR(15) NULL,
+  PRIMARY KEY (`idcustomers`))
 ENGINE = InnoDB;
 
 
@@ -66,28 +65,28 @@ ENGINE = InnoDB;
 -- Table `carcompany`.`invoices`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carcompany`.`invoices` (
-  `invoiceid` INT NOT NULL,
-  `invoicenumber` CHAR(15) NULL,
-  `cars_car_id` INT NOT NULL,
-  `salespeople_salespersonid` INT NOT NULL,
-  `customers_customer_id` INT NOT NULL,
-  PRIMARY KEY (`invoiceid`, `cars_car_id`, `salespeople_salespersonid`, `customers_customer_id`),
-  INDEX `fk_invoices_cars_idx` (`cars_car_id` ASC) VISIBLE,
-  INDEX `fk_invoices_salespeople1_idx` (`salespeople_salespersonid` ASC) VISIBLE,
-  INDEX `fk_invoices_customers1_idx` (`customers_customer_id` ASC) VISIBLE,
+  `idinvoices` INT NOT NULL,
+  `invoicenumber` VARCHAR(45) NULL,
+  `cars_idcars` INT NOT NULL,
+  `salespeople_idsalespeople` INT NOT NULL,
+  `customers_idcustomers` INT NOT NULL,
+  PRIMARY KEY (`idinvoices`, `cars_idcars`, `salespeople_idsalespeople`, `customers_idcustomers`),
+  INDEX `fk_invoices_cars_idx` (`cars_idcars` ASC) VISIBLE,
+  INDEX `fk_invoices_salespeople1_idx` (`salespeople_idsalespeople` ASC) VISIBLE,
+  INDEX `fk_invoices_customers1_idx` (`customers_idcustomers` ASC) VISIBLE,
   CONSTRAINT `fk_invoices_cars`
-    FOREIGN KEY (`cars_car_id`)
-    REFERENCES `carcompany`.`cars` (`car_id`)
+    FOREIGN KEY (`cars_idcars`)
+    REFERENCES `carcompany`.`cars` (`idcars`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoices_salespeople1`
-    FOREIGN KEY (`salespeople_salespersonid`)
-    REFERENCES `carcompany`.`salespeople` (`salespersonid`)
+    FOREIGN KEY (`salespeople_idsalespeople`)
+    REFERENCES `carcompany`.`salespeople` (`idsalespeople`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoices_customers1`
-    FOREIGN KEY (`customers_customer_id`)
-    REFERENCES `carcompany`.`customers` (`customer_id`)
+    FOREIGN KEY (`customers_idcustomers`)
+    REFERENCES `carcompany`.`customers` (`idcustomers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
