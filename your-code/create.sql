@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `carcompany`.`customers` (
   `phone` VARCHAR(20) NULL,
   `email` VARCHAR(100) NULL,
   `address` VARCHAR(150) NULL,
-  `city` VARCHAR(50) NULL,
+  `city` VARCHAR(45) NOT NULL,
   `state_province` VARCHAR(45) NULL,
   `country` VARCHAR(45) NULL,
   `postal` VARCHAR(15) NULL,
@@ -67,6 +67,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `carcompany`.`invoices` (
   `idinvoices` INT NOT NULL,
   `invoicenumber` VARCHAR(45) NULL,
+  `date` VARCHAR(15) NULL,
   `cars_idcars` INT NOT NULL,
   `salespeople_idsalespeople` INT NOT NULL,
   `customers_idcustomers` INT NOT NULL,
@@ -95,3 +96,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
