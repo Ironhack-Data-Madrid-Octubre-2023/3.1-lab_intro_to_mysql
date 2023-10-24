@@ -23,6 +23,7 @@ USE `cars_db` ;
 CREATE TABLE IF NOT EXISTS `cars_db`.`Cars` (
   `idCars` INT NOT NULL,
   `VIN` VARCHAR(45) NULL,
+  `manufacturer` VARCHAR(45) NULL,
   `model` VARCHAR(45) NULL,
   `year` VARCHAR(45) NULL,
   `color` VARCHAR(45) NULL,
