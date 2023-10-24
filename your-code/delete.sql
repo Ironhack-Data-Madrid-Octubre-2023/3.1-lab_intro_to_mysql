@@ -1,0 +1,3 @@
+USE coches;
+DELETE FROM cars
+WHERE idcars = 4 AND vin = 'DAM41UDN3CHU2WVF6';
