@@ -1,17 +1,32 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema cars_db
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema cars_db
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `cars_db` DEFAULT CHARACTER SET latin1 ;
 USE `cars_db` ;
 
 -- -----------------------------------------------------
 -- Table `cars_db`.`Cars`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars_db`.`Cars` (
-  `idcars` INT NOT NULL,
-  `VIN` INT NOT NULL,
-  `manufacturer` VARCHAR(45) NULL,
+  `idCars` INT NOT NULL,
+  `VIN` VARCHAR(45) NULL,
   `model` VARCHAR(45) NULL,
-  `year` DATE NULL,
+  `year` VARCHAR(45) NULL,
   `color` VARCHAR(45) NULL,
-  PRIMARY KEY (`idcars`),
-  UNIQUE INDEX `idCars_UNIQUE` (`idcars` ASC))
+  PRIMARY KEY (`idCars`))
 ENGINE = InnoDB;
 
 
@@ -19,31 +34,17 @@ ENGINE = InnoDB;
 -- Table `cars_db`.`Customers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars_db`.`Customers` (
-  `idcustomer` INT NOT NULL,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `phone_number` INT NULL,
+  `idCustomers` INT NOT NULL,
+  `cust_number` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `phone` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
   `city` VARCHAR(45) NULL,
-  `state_province` VARCHAR(45) NULL,
+  `state` VARCHAR(45) NULL,
   `country` VARCHAR(45) NULL,
-  `zip` INT NULL,
-  PRIMARY KEY (`idcustomer`),
-  UNIQUE INDEX `idCustomer_UNIQUE` (`idcustomer` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `cars_db`.`Stores`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cars_db`.`Stores` (
-  `idstore` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `address` VARCHAR(45) NULL,
-  PRIMARY KEY (`idstore`))
+  `ZIP` VARCHAR(45) NULL,
+  PRIMARY KEY (`idCustomers`))
 ENGINE = InnoDB;
 
 
@@ -51,18 +52,11 @@ ENGINE = InnoDB;
 -- Table `cars_db`.`Salespersons`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars_db`.`Salespersons` (
-  `idstaff` INT NOT NULL,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `Stores_id_store` INT NOT NULL,
-  PRIMARY KEY (`idstaff`),
-  UNIQUE INDEX `idSalespersons_UNIQUE` (`idstaff` ASC),
-  INDEX `fk_Salespersons_Stores1_idx` (`Stores_id_store` ASC),
-  CONSTRAINT `fk_Salespersons_Stores1`
-    FOREIGN KEY (`Stores_id_store`)
-    REFERENCES `cars_db`.`Stores` (`idstore`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `idSales` INT NOT NULL,
+  `staff_number` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `store` VARCHAR(45) NULL,
+  PRIMARY KEY (`idSales`))
 ENGINE = InnoDB;
 
 
@@ -70,37 +64,29 @@ ENGINE = InnoDB;
 -- Table `cars_db`.`Invoices`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars_db`.`Invoices` (
-  `idinvoice` INT NOT NULL,
-  `number` INT NULL,
-  `date` DATETIME NULL,
-  `Stores_idstore` INT NOT NULL,
-  `Salespersons_idstaff` INT NOT NULL,
-  `Cars_idcars` INT NOT NULL,
-  `Customers_idcustomer` INT NOT NULL,
-  PRIMARY KEY (`idinvoice`),
-  UNIQUE INDEX `id_invoice_UNIQUE` (`idinvoice` ASC),
-  INDEX `fk_Invoices_Stores_idx` (`Stores_idstore` ASC),
-  INDEX `fk_Invoices_Salespersons1_idx` (`Salespersons_idstaff` ASC),
-  INDEX `fk_Invoices_Cars1_idx` (`Cars_idcars` ASC),
-  INDEX `fk_Invoices_Customers1_idx` (`Customers_idcustomer` ASC),
-  CONSTRAINT `fk_Invoices_Stores`
-    FOREIGN KEY (`Stores_idstore`)
-    REFERENCES `cars_db`.`Stores` (`idstore`)
+  `idInvoices` INT NOT NULL,
+  `invoice_number` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NULL,
+  `Cars_idCars` INT NOT NULL,
+  `Customers_idCustomers` INT NOT NULL,
+  `Salespersons_idSales` INT NOT NULL,
+  PRIMARY KEY (`idInvoices`),
+  INDEX `fk_Invoices_Cars_idx` (`Cars_idCars` ASC),
+  INDEX `fk_Invoices_Salespersons1_idx` (`Salespersons_idSales` ASC),
+  INDEX `fk_Invoices_Customers1_idx` (`Customers_idCustomers` ASC),
+  CONSTRAINT `fk_Invoices_Cars`
+    FOREIGN KEY (`Cars_idCars`)
+    REFERENCES `cars_db`.`Cars` (`idCars`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Invoices_Salespersons1`
-    FOREIGN KEY (`Salespersons_idstaff`)
-    REFERENCES `cars_db`.`Salespersons` (`idstaff`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Invoices_Cars1`
-    FOREIGN KEY (`Cars_idcars`)
-    REFERENCES `cars_db`.`Cars` (`idcars`)
+    FOREIGN KEY (`Salespersons_idSales`)
+    REFERENCES `cars_db`.`Salespersons` (`idSales`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Invoices_Customers1`
-    FOREIGN KEY (`Customers_idcustomer`)
-    REFERENCES `cars_db`.`Customers` (`idcustomer`)
+    FOREIGN KEY (`Customers_idCustomers`)
+    REFERENCES `cars_db`.`Customers` (`idCustomers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -109,58 +95,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-ALTER TABLE Cars
-MODIFY COLUMN VIN VARCHAR(20);
-
-ALTER TABLE `cars_db`.`Cars` 
-CHANGE COLUMN `year` `year` INT NULL DEFAULT NULL ;
-
-ALTER TABLE `cars_db`.`Customers` 
-CHANGE COLUMN `first_name` `cust_number` INT NULL DEFAULT NULL ,
-CHANGE COLUMN `last_name` `name` VARCHAR(45) NULL DEFAULT NULL ;
-
-ALTER TABLE `cars_db`.`Customers` 
-CHANGE COLUMN `phone_number` `phone_number` VARCHAR(45) NULL DEFAULT NULL ,
-DROP INDEX `phone_number_UNIQUE` ;
-
-ALTER TABLE `cars_db`.`Customers` 
-DROP INDEX `email_UNIQUE` ;
-
-ALTER TABLE `cars_db`.`Salespersons` 
-DROP FOREIGN KEY `fk_Salespersons_Stores1`;
-ALTER TABLE `cars_db`.`Salespersons` 
-CHANGE COLUMN `Stores_id_store` `Stores_id_store` INT(11) NULL ,
-ADD COLUMN `id_staffnum` VARCHAR(45) NULL AFTER `Stores_id_store`;
-ALTER TABLE `cars_db`.`Salespersons` 
-ADD CONSTRAINT `fk_Salespersons_Stores1`
-  FOREIGN KEY (`Stores_id_store`)
-  REFERENCES `cars_db`.`Stores` (`idstore`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
-
-ALTER TABLE `cars_db`.`Salespersons` 
-CHANGE COLUMN `id_staffnum` `id_staffnum` VARCHAR(45) NULL DEFAULT NULL AFTER `idstaff`;
-
-ALTER TABLE `cars_db`.`Salespersons` 
-DROP COLUMN `last_name`,
-CHANGE COLUMN `first_name` `name` VARCHAR(45) NULL DEFAULT NULL ,
-ADD COLUMN `store_name` VARCHAR(45) NULL AFTER `name`;
-
-ALTER TABLE `cars_db`.`Salespersons` 
-DROP FOREIGN KEY `fk_Salespersons_Stores1`;
-ALTER TABLE `cars_db`.`Salespersons` 
-DROP COLUMN `Stores_id_store`,
-DROP INDEX `fk_Salespersons_Stores1_idx` ;
-
-
-ALTER TABLE `cars_db`.`Invoices` 
-DROP FOREIGN KEY `fk_Invoices_Stores`;
-ALTER TABLE `cars_db`.`Invoices` 
-DROP COLUMN `Stores_idstore`,
-CHANGE COLUMN `Salespersons_idstaff` `Salespersons_idstaff` INT(11) NOT NULL AFTER `Customers_idcustomer`,
-CHANGE COLUMN `date` `date` DATE NULL DEFAULT NULL ,
-DROP INDEX `fk_Invoices_Stores_idx` ;
-
-
