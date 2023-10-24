@@ -37,15 +37,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `car_dealership_company`.`Cars` (
   `idCars` INT NOT NULL,
-  `Invoices_idInvoices` INT NOT NULL,
   `VIN` VARCHAR(45) NULL,
   `Manufacturer` VARCHAR(45) NULL,
-  ` Model` VARCHAR(45) NULL,
+  `Model` VARCHAR(45) NULL,
   `Year` VARCHAR(45) NULL,
   `Color` VARCHAR(45) NULL,
+  `Invoices_idInvoices` INT NOT NULL,
   PRIMARY KEY (`idCars`, `Invoices_idInvoices`),
-  INDEX `fk_Cars_Invoices_idx` (`Invoices_idInvoices` ASC) VISIBLE,
-  CONSTRAINT `fk_Cars_Invoices`
+  INDEX `fk_Cars_Invoices1_idx` (`Invoices_idInvoices` ASC) VISIBLE,
+  CONSTRAINT `fk_Cars_Invoices1`
     FOREIGN KEY (`Invoices_idInvoices`)
     REFERENCES `car_dealership_company`.`Invoices` (`idInvoices`)
     ON DELETE NO ACTION
@@ -58,7 +58,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `car_dealership_company`.`Customers` (
   `idCustomers` INT NOT NULL,
-  `Invoices_idInvoices` INT NOT NULL,
   ` The customer ID` VARCHAR(45) NULL,
   `Name` VARCHAR(45) NULL,
   `Phone number` VARCHAR(45) NULL,
@@ -68,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `car_dealership_company`.`Customers` (
   `State/province` VARCHAR(45) NULL,
   `Country` VARCHAR(45) NULL,
   `Zip/postal` VARCHAR(45) NULL,
+  `Invoices_idInvoices` INT NOT NULL,
   PRIMARY KEY (`idCustomers`, `Invoices_idInvoices`),
   INDEX `fk_Customers_Invoices1_idx` (`Invoices_idInvoices` ASC) VISIBLE,
   CONSTRAINT `fk_Customers_Invoices1`
@@ -83,10 +83,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `car_dealership_company`.`Salespersons` (
   `idSalespersons` INT NOT NULL,
-  `Invoices_idInvoices` INT NOT NULL,
   `Staff ID` VARCHAR(45) NULL,
   `Name` VARCHAR(45) NULL,
   `Store` VARCHAR(45) NULL,
+  `Invoices_idInvoices` INT NOT NULL,
   PRIMARY KEY (`idSalespersons`, `Invoices_idInvoices`),
   INDEX `fk_Salespersons_Invoices1_idx` (`Invoices_idInvoices` ASC) VISIBLE,
   CONSTRAINT `fk_Salespersons_Invoices1`
